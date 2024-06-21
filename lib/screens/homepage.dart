@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pranamas/controllers/auth_controller.dart';
 import 'package:pranamas/screens/create_data_user.dart';
 
 import '../controllers/get_data_user_controller.dart';
@@ -16,7 +18,15 @@ class HomePage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           children: [
-            const Text('Data User'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Data User'),
+                IconButton(
+                    onPressed: () => AuthenticationRepository.instance.logOut(),
+                    icon: const Icon(Iconsax.logout))
+              ],
+            ),
             ElevatedButton(
               onPressed: () => Get.to(() => const CreateDataUser()),
               child: const Text('Tambahkan Data'),

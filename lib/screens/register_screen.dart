@@ -10,9 +10,8 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
-    return Scaffold(
-        body: SafeArea(
-            child: ListView(
+    return SafeArea(
+        child: ListView(
       padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24, top: 10),
       children: [
         Align(
@@ -23,8 +22,8 @@ class RegisterScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10.0),
-        Text("Mari buat akun Anda",
-            style: Theme.of(context).textTheme.titleLarge),
+        Text("Mari buat akun Anda".tr,
+            style: Theme.of(context).textTheme.displayLarge),
         Form(
           key: controller.signupFormKey,
           child: Padding(
@@ -39,13 +38,13 @@ class RegisterScreen extends StatelessWidget {
                         controller: controller.firstName,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Nama depan harus di isi';
+                            return 'Nama depan harus di isi'.tr;
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Iconsax.user),
-                          labelText: 'Nama depan',
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Iconsax.user),
+                          labelText: 'Nama depan'.tr,
                         ),
                       ),
                     ),
@@ -56,13 +55,13 @@ class RegisterScreen extends StatelessWidget {
                         expands: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Nama belakang harus di isi';
+                            return 'Nama belakang harus di isi'.tr;
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Iconsax.user),
-                          labelText: 'Nama belakang',
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Iconsax.user),
+                          labelText: 'Nama belakang'.tr,
                         ),
                       ),
                     )
@@ -73,13 +72,13 @@ class RegisterScreen extends StatelessWidget {
                   controller: controller.userName,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Nama pengguna diperlukan';
+                      return 'Nama pengguna diperlukan'.tr;
                     }
                     return null;
                   },
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Iconsax.user_edit),
-                    labelText: 'Nama pengguna',
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Iconsax.user_edit),
+                    labelText: 'Nama pengguna'.tr,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -87,14 +86,14 @@ class RegisterScreen extends StatelessWidget {
                   controller: controller.email,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Email Tidak Boleh Kosong';
+                      return 'Email Tidak Boleh Kosong'.tr;
                     }
 
                     final emailRegExp =
                         RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                     if (!emailRegExp.hasMatch(value)) {
-                      return 'Alamat email tidak valid';
+                      return 'Alamat email tidak valid'.tr;
                     }
                     return null;
                   },
@@ -110,26 +109,30 @@ class RegisterScreen extends StatelessWidget {
                     obscureText: controller.hidePassword.value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Kata Sandi Tidak Boleh Kosong';
+                        return 'Kata Sandi Tidak Boleh Kosong'.tr;
                       }
 
                       if (value.length < 6) {
-                        return 'Kata sandi harus terdiri dari minimal 6 karakter';
+                        return 'Kata sandi harus terdiri dari minimal 6 karakter'
+                            .tr;
                       }
                       if (!value.contains(RegExp(r'[A-Z]'))) {
-                        return 'Kata sandi harus mengandung setidaknya satu huruf besar';
+                        return 'Kata sandi harus mengandung setidaknya satu huruf besar'
+                            .tr;
                       }
                       if (!value.contains(RegExp(r'[0-9]'))) {
-                        return 'Kata sandi harus berisi setidaknya satu angka';
+                        return 'Kata sandi harus berisi setidaknya satu angka'
+                            .tr;
                       }
                       if (!value.contains(RegExp(r'[!@#$%^&*(),.?"{}|<>]'))) {
-                        return 'Kata sandi harus mengandung setidaknya satu karakter khusus';
+                        return 'Kata sandi harus mengandung setidaknya satu karakter khusus'
+                            .tr;
                       }
                       return null;
                     },
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Iconsax.password_check),
-                      labelText: 'Password',
+                      labelText: 'Password'.tr,
                       suffixIcon: IconButton(
                           onPressed: () => controller.hidePassword.value =
                               !controller.hidePassword.value,
@@ -156,13 +159,13 @@ class RegisterScreen extends StatelessWidget {
                     Expanded(
                       child: Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'saya setuju untuk ',
+                            text: 'saya setuju untuk '.tr,
                             style: GoogleFonts.aBeeZee(
                                 color: Colors.grey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400)),
                         TextSpan(
-                            text: 'Kebijakan Privasi',
+                            text: 'Kebijakan Privasi'.tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -171,13 +174,13 @@ class RegisterScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline)),
                         TextSpan(
-                            text: ' dan ',
+                            text: ' dan '.tr,
                             style: GoogleFonts.aBeeZee(
                                 color: Colors.grey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400)),
                         TextSpan(
-                            text: 'Ketentuan penggunaan',
+                            text: 'Ketentuan penggunaan'.tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -197,8 +200,8 @@ class RegisterScreen extends StatelessWidget {
                       style: const ButtonStyle(
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.blueAccent)),
-                      child: const Text(
-                        'Buat Akun',
+                      child: Text(
+                        'Buat Akun'.tr,
                       )),
                 ),
                 const SizedBox(height: 16.0),
@@ -213,7 +216,7 @@ class RegisterScreen extends StatelessWidget {
                       endIndent: 5,
                     )),
                     Text(
-                      'atau daftar dengan',
+                      'atau daftar dengan'.tr,
                       style: Theme.of(context)
                           .textTheme
                           .labelMedium!
@@ -246,6 +249,6 @@ class RegisterScreen extends StatelessWidget {
           ),
         )
       ],
-    )));
+    ));
   }
 }
