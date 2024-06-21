@@ -1,0 +1,250 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pranamas/controllers/sign_up_controller.dart';
+
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.put(SignupController());
+    return SafeArea(
+        child: ListView(
+      padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24, top: 10),
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: InkWell(
+            onTap: () => Get.back(),
+            child: const Icon(Icons.arrow_back_ios),
+          ),
+        ),
+        const SizedBox(height: 10.0),
+        Text("Mari buat akun Anda",
+            style: Theme.of(context).textTheme.displayLarge),
+        Form(
+          key: controller.signupFormKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        expands: false,
+                        controller: controller.firstName,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama depan harus di isi';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Iconsax.user),
+                          labelText: 'Nama depan',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 15.0),
+                    Expanded(
+                      child: TextFormField(
+                        controller: controller.lastName,
+                        expands: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Nama belakang harus di isi';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Iconsax.user),
+                          labelText: 'Nama belakang',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: controller.userName,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Nama pengguna diperlukan';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Iconsax.user_edit),
+                    labelText: 'Nama pengguna',
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                TextFormField(
+                  controller: controller.email,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email Tidak Boleh Kosong';
+                    }
+
+                    final emailRegExp =
+                        RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                    if (!emailRegExp.hasMatch(value)) {
+                      return 'Alamat email tidak valid';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Iconsax.direct),
+                    labelText: 'E-Mail',
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                Obx(
+                  () => TextFormField(
+                    controller: controller.password,
+                    obscureText: controller.hidePassword.value,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Kata Sandi Tidak Boleh Kosong';
+                      }
+
+                      if (value.length < 6) {
+                        return 'Kata sandi harus terdiri dari minimal 6 karakter';
+                      }
+                      if (!value.contains(RegExp(r'[A-Z]'))) {
+                        return 'Kata sandi harus mengandung setidaknya satu huruf besar';
+                      }
+                      if (!value.contains(RegExp(r'[0-9]'))) {
+                        return 'Kata sandi harus berisi setidaknya satu angka';
+                      }
+                      if (!value.contains(RegExp(r'[!@#$%^&*(),.?"{}|<>]'))) {
+                        return 'Kata sandi harus mengandung setidaknya satu karakter khusus';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.password_check),
+                      labelText: 'Password',
+                      suffixIcon: IconButton(
+                          onPressed: () => controller.hidePassword.value =
+                              !controller.hidePassword.value,
+                          icon: Icon(controller.hidePassword.value
+                              ? Iconsax.eye_slash
+                              : Iconsax.eye)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                Row(
+                  children: [
+                    SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Obx(
+                          () => Checkbox(
+                            value: controller.privacyPolicy.value,
+                            onChanged: (value) => controller.privacyPolicy
+                                .value = !controller.privacyPolicy.value,
+                          ),
+                        )),
+                    const SizedBox(width: 5.0),
+                    Expanded(
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: 'saya setuju untuk ',
+                            style: GoogleFonts.aBeeZee(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400)),
+                        TextSpan(
+                            text: 'Kebijakan Privasi',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline)),
+                        TextSpan(
+                            text: ' dan ',
+                            style: GoogleFonts.aBeeZee(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400)),
+                        TextSpan(
+                            text: 'Ketentuan penggunaan',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline))
+                      ])),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      onPressed: () => controller.signup(),
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.blueAccent)),
+                      child: const Text(
+                        'Buat Akun',
+                      )),
+                ),
+                const SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Flexible(
+                        child: Divider(
+                      color: Colors.grey,
+                      thickness: .5,
+                      indent: 60,
+                      endIndent: 5,
+                    )),
+                    Text(
+                      'atau daftar dengan',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(color: Colors.grey),
+                    ),
+                    const Flexible(
+                        child: Divider(
+                      color: Colors.grey,
+                      thickness: .5,
+                      indent: 5,
+                      endIndent: 60,
+                    )),
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(100)),
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Image(
+                        width: 24,
+                        height: 24,
+                        image: AssetImage('assets/images/google.png')),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    ));
+  }
+}

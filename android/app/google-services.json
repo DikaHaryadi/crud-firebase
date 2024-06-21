@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "548284647952",
+    "project_id": "pranamas-ffcd0",
+    "storage_bucket": "pranamas-ffcd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:548284647952:android:5c9c14886097ba6b9e1895",
+        "android_client_info": {
+          "package_name": "com.example.pranamas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAP7T3J53sA-CAOEMbDmk0JT0qhhClQV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
