@@ -52,7 +52,8 @@ class FirebaseStorageService extends GetxController {
       final downloadUrl = await uploadTask.ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
-      throw Exception('Failed to upload image: $e');
+      print('Failed to upload image: $e');
+      return '';
     }
   }
 }

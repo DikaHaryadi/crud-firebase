@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataUserModel {
+  String id;
   String photoUser;
   String userName;
   String password;
   String namaUser;
-  String userId;
+  String umur;
   String agama;
   String jenisKelamin;
   String pendidikan;
@@ -13,11 +14,12 @@ class DataUserModel {
   // final DocumentSnapshot? documentSnapshot;
 
   DataUserModel({
+    this.id = '',
     required this.photoUser,
     required this.userName,
     required this.password,
     required this.namaUser,
-    required this.userId,
+    required this.umur,
     required this.agama,
     required this.jenisKelamin,
     required this.pendidikan,
@@ -30,7 +32,7 @@ class DataUserModel {
         userName: '',
         password: '',
         namaUser: '',
-        userId: '',
+        umur: '',
         agama: '',
         jenisKelamin: '',
         pendidikan: '',
@@ -44,7 +46,7 @@ class DataUserModel {
       'userName': userName,
       'password': password,
       'namaUser': namaUser,
-      'userId': userId,
+      'umur': umur,
       'agama': agama,
       'jenisKelamin': jenisKelamin,
       'pendidikan': pendidikan,
@@ -55,11 +57,12 @@ class DataUserModel {
   factory DataUserModel.fromSnapshot(QueryDocumentSnapshot document) {
     final data = document.data() as Map<String, dynamic>;
     return DataUserModel(
+      id: document.id,
       photoUser: data['photoUser'] ?? '',
       userName: data['userName'] ?? '',
       password: data['password'] ?? '',
       namaUser: data['namaUser'] ?? '',
-      userId: data['userId'] ?? '',
+      umur: data['umur'] ?? '',
       agama: data['agama'] ?? '',
       jenisKelamin: data['jenisKelamin'] ?? '',
       pendidikan: data['pendidikan'] ?? '',
@@ -71,7 +74,7 @@ class DataUserModel {
   // Method to convert DataUserModel to a Map
   Map<String, dynamic> toMap() {
     return {
-      'userId': userId,
+      'umur': umur,
       'userName': userName,
       'password': password,
       'namaUser': namaUser,

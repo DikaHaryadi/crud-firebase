@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pranamas/controllers/get_data_user_controller.dart';
 import 'package:pranamas/models/data_user_model.dart';
 import 'package:pranamas/repository/data_user_repo.dart';
 import 'package:pranamas/screens/rootpage.dart';
@@ -14,10 +15,10 @@ class DataUserController extends GetxController {
   final userNameController = TextEditingController();
   final password = TextEditingController();
   final namaUser = TextEditingController();
-  final userId = TextEditingController();
-  final agama = ''.obs;
+  final umurController = TextEditingController();
+  final agama = 'Islam'.obs;
   final jenisKelamin = ''.obs;
-  final pendidikan = TextEditingController();
+  final pendidikan = 'SD'.obs;
   final alamat = TextEditingController();
 
   final dataUserRepo =
@@ -72,10 +73,10 @@ class DataUserController extends GetxController {
         userName: userNameController.text.trim(),
         password: password.text.trim(),
         namaUser: namaUser.text.trim(),
-        userId: userId.text.trim(),
+        umur: umurController.text.trim(),
         agama: agama.value,
         jenisKelamin: jenisKelamin.value,
-        pendidikan: pendidikan.text.trim(),
+        pendidikan: pendidikan.value,
         alamat: alamat.text.trim(),
       );
 
@@ -104,6 +105,7 @@ class DataUserController extends GetxController {
 
       // Navigate to home
       Get.off(() => const RootPage());
+      GetDataUserController.instance.fetchData();
 
       return null;
     } catch (e) {

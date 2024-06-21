@@ -1,81 +1,183 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pranamas/models/data_user_model.dart';
-import 'package:pranamas/repository/get_data_user_repo.dart';
+import '../models/data_user_model.dart';
+
+// class GetDataUserController extends GetxController {
+//   static GetDataUserController get instance => Get.find();
+//   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+//   final RxList<DataUserModel> users = <DataUserModel>[].obs;
+//   final RxBool isLoadingDataUser = false.obs;
+
+//   @override
+//   void onInit() {
+//     super.onInit();
+//     fetchData();
+//   }
+
+//   // Fetch Data Method
+//   Future<void> fetchData() async {
+//     try {
+//       final QuerySnapshot snapshot =
+//           await _firestore.collection('dataUserModel').get();
+//       final List<DataUserModel> fetchedUsers =
+//           snapshot.docs.map((doc) => DataUserModel.fromSnapshot(doc)).toList();
+//       users.assignAll(fetchedUsers);
+//     } catch (e) {
+//       Get.snackbar('Error', 'Failed to fetch data: $e');
+//     }
+//   }
+
+//   // Edit Data Method
+//   Future<void> saveData(DataUserModel user) async {
+//     try {
+//       isLoadingDataUser.value = true;
+//       if (user.id.isNotEmpty) {
+//         // Jika ID sudah ada, update dokumen
+//         final docRef = _firestore.collection('dataUserModel').doc(user.id);
+//         await docRef.update(user.toJson());
+//         int index = users.indexWhere((u) => u.id == user.id);
+//         if (index != -1) {
+//           users[index] = user;
+//           users.refresh();
+//         }
+//         Get.snackbar(
+//           'Success',
+//           'Data User Edited Successfully',
+//           backgroundColor: Colors.green,
+//           colorText: Colors.white,
+//           icon: const Icon(Icons.check, color: Colors.white),
+//         );
+//       } else {
+//         // Jika ID tidak ada, tambahkan dokumen baru
+//         final docRef =
+//             await _firestore.collection('dataUserModel').add(user.toJson());
+//         user.id = docRef.id;
+//         users.add(user);
+//         users.refresh();
+//         Get.snackbar(
+//           'Success',
+//           'Data User Added Successfully',
+//           backgroundColor: Colors.green,
+//           colorText: Colors.white,
+//           icon: const Icon(Icons.check, color: Colors.white),
+//         );
+//       }
+//     } catch (e) {
+//       Get.snackbar('Error', 'Failed to save data: $e');
+//       print('Error : $e');
+//     } finally {
+//       isLoadingDataUser.value = false;
+//     }
+//   }
+
+//   // Delete Method
+//   Future<void> deleteData(String id) async {
+//     try {
+//       final docRef = _firestore.collection('dataUserModel').doc(id);
+//       await docRef.delete();
+//       users.removeWhere((u) => u.id == id);
+//       users.refresh();
+//       Get.snackbar(
+//         'Success',
+//         'Data User Deleted Successfully',
+//         backgroundColor: Colors.red,
+//         colorText: Colors.white,
+//         icon: const Icon(Icons.check, color: Colors.white),
+//       );
+//     } catch (e) {
+//       Get.snackbar('Error', 'Failed to delete data: $e');
+//       print('Error : $e');
+//     }
+//   }
+// }
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:get/get.dart';
+// import '../models/data_user_model.dart';
 
 class GetDataUserController extends GetxController {
-  RxList<DataUserModel> dataUserModel = <DataUserModel>[].obs;
-  final isLoadingDataUser = RxBool(false);
-  final dataUserRepo = Get.put(GetDataUserRepository());
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  static GetDataUserController get instance => Get.find();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final RxList<DataUserModel> users = <DataUserModel>[].obs;
+  final RxBool isLoadingDataUser = false.obs;
 
   @override
   void onInit() {
-    fetchDataUser();
     super.onInit();
+    fetchData();
   }
 
-  Future<void> fetchDataUser() async {
+  Future<void> fetchData() async {
+    try {
+      final QuerySnapshot snapshot =
+          await _firestore.collection('dataUserModel').get();
+      final List<DataUserModel> fetchedUsers =
+          snapshot.docs.map((doc) => DataUserModel.fromSnapshot(doc)).toList();
+      users.assignAll(fetchedUsers);
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to fetch data: $e');
+    }
+  }
+
+  Future<void> saveData(DataUserModel user) async {
     try {
       isLoadingDataUser.value = true;
-      final dataUsers = await dataUserRepo.fetchDataUser();
-      dataUserModel.assignAll(dataUsers);
+      if (user.id.isNotEmpty) {
+        // Jika ID sudah ada, update dokumen
+        final docRef = _firestore.collection('dataUserModel').doc(user.id);
+        await docRef.update(user.toJson());
+        int index = users.indexWhere((u) => u.id == user.id);
+        if (index != -1) {
+          users[index] = user;
+          users.refresh();
+        }
+        Get.snackbar(
+          'Success',
+          'Data User Edited Successfully',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          icon: const Icon(Icons.check, color: Colors.white),
+        );
+      } else {
+        // Jika ID tidak ada, tambahkan dokumen baru
+        final docRef =
+            await _firestore.collection('dataUserModel').add(user.toJson());
+        user.id = docRef.id;
+        users.add(user);
+        users.refresh();
+        Get.snackbar(
+          'Success',
+          'Data User Added Successfully',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          icon: const Icon(Icons.check, color: Colors.white),
+        );
+      }
     } catch (e) {
-      dataUserModel.assignAll([]);
-      print('Error pada fetchDataUser di get_data_user_controller: $e');
+      Get.snackbar('Error', 'Failed to save data: $e');
+      print('Error : $e');
     } finally {
       isLoadingDataUser.value = false;
     }
   }
 
-  Future<void> addDataUser(DataUserModel newUser) async {
+  Future<void> deleteData(String id) async {
     try {
-      await dataUserRepo.addDataUser(newUser);
-      dataUserModel.add(newUser);
+      final docRef = _firestore.collection('dataUserModel').doc(id);
+      await docRef.delete();
+      users.removeWhere((u) => u.id == id);
+      users.refresh();
+      Get.snackbar(
+        'Success',
+        'Data User Deleted Successfully',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.check, color: Colors.white),
+      );
     } catch (e) {
-      print('Failed to add user: $e');
-    }
-  }
-
-  Future<void> deleteDataUser(DataUserModel user) async {
-    try {
-      // Cari document ID yang sesuai
-      QuerySnapshot querySnapshot = await _db
-          .collection('dataUserModel')
-          .where('userId', isEqualTo: user.userId)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        await dataUserRepo.deleteDataUser(querySnapshot.docs.first.id);
-        dataUserModel.remove(user);
-        print('ini yang dihapus : ${user.userId}');
-      } else {
-        throw Exception('No user found with userId: ${user.userId}');
-      }
-    } catch (e) {
-      print('Failed to delete user: $e');
-      // Handle error as needed
-    }
-  }
-
-  Future<void> editDataUser(DataUserModel user) async {
-    try {
-      QuerySnapshot querySnapshot = await _db
-          .collection('dataUserModel')
-          .where('userId', isEqualTo: user.userId)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        await querySnapshot.docs.first.reference.update(user.toMap());
-        int index = dataUserModel.indexWhere((u) => u.userId == user.userId);
-        if (index != -1) {
-          dataUserModel[index] = user;
-        }
-      } else {
-        throw Exception('No user found with userId: ${user.userId}');
-      }
-    } catch (e) {
-      throw Exception('Failed to edit user: $e');
+      Get.snackbar('Error', 'Failed to delete data: $e');
+      print('Error : $e');
     }
   }
 }
