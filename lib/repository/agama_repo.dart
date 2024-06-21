@@ -35,7 +35,7 @@ class AgamaRepository extends GetxController {
         return [];
       }
     } catch (e) {
-      print('ada yag salah di fetchDataUser pada repository nya : $e');
+      print('ada yang salah di fetchDataUser pada repository nya: $e');
       throw Get.snackbar(
         'Oh Snap!',
         e.toString(),
@@ -76,32 +76,28 @@ class AgamaRepository extends GetxController {
     }
   }
 
-  // Future<void> editAgamaData(String documentId, AgamaModel updatedData) async {
-  //   try {
-  //     print(
-  //         "Updating document: $documentId with data: ${updatedData.toJson()}");
-  //     await _db
-  //         .collection('agamaMaster')
-  //         .doc(documentId)
-  //         .update(updatedData.toJson());
-  //     print("Document updated successfully");
+  Future<void> editAgamaData(String documentId, AgamaModel updatedData) async {
+    try {
+      await _db
+          .collection('agamaMaster')
+          .doc(documentId)
+          .update(updatedData.toJson());
 
-  //     Get.snackbar(
-  //       'Success',
-  //       'Agama data updated successfully',
-  //       backgroundColor: Colors.green,
-  //       colorText: Colors.white,
-  //       icon: const Icon(Iconsax.edit, color: Colors.white),
-  //     );
-  //   } catch (e) {
-  //     print("Error updating document: $e");
-  //     Get.snackbar(
-  //       'Update Error',
-  //       'Failed to update agama data: ${e.toString()}',
-  //       backgroundColor: Colors.red.shade600,
-  //       colorText: Colors.white,
-  //       icon: const Icon(Iconsax.warning_2, color: Colors.white),
-  //     );
-  //   }
-  // }
+      Get.snackbar(
+        'Success',
+        'Agama data updated successfully',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        icon: const Icon(Iconsax.edit, color: Colors.white),
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Update Error',
+        'Failed to update agama data: ${e.toString()}',
+        backgroundColor: Colors.red.shade600,
+        colorText: Colors.white,
+        icon: const Icon(Iconsax.warning_2, color: Colors.white),
+      );
+    }
+  }
 }
