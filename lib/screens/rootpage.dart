@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pranamas/screens/homepage.dart';
 import 'package:pranamas/screens/master_agama.dart';
-import 'package:pranamas/screens/master_pendidikan.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -15,7 +14,6 @@ class RootPage extends StatelessWidget {
     final List<Widget> pages = [
       const HomePage(),
       const MasterAgama(),
-      const MasterPendidikan(),
     ];
 
     void onItemTapped(int index) {
@@ -52,14 +50,6 @@ class RootPage extends StatelessWidget {
             ),
             activeIcon: const Icon(Iconsax.activity),
             label: 'Agama',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-              onTap: () => onItemTapped(2),
-              child: const Icon(Iconsax.add),
-            ),
-            activeIcon: const Icon(Iconsax.add),
-            label: 'Pendidikan',
           ),
         ],
       ),

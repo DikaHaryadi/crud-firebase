@@ -20,9 +20,9 @@ class _EditUserDialogState extends State<EditUserDialog> {
   late TextEditingController passwordController;
   late TextEditingController namaUserController;
   late TextEditingController umurController;
-  late TextEditingController agamaController;
-  late TextEditingController jenisKelaminController;
-  late TextEditingController pendidikanController;
+  late String agama;
+  late String jenisKelamin;
+  late String pendidikan;
   late TextEditingController alamatController;
 
   final storage = Get.put(FirebaseStorageService());
@@ -34,10 +34,9 @@ class _EditUserDialogState extends State<EditUserDialog> {
     passwordController = TextEditingController(text: widget.user.password);
     namaUserController = TextEditingController(text: widget.user.namaUser);
     umurController = TextEditingController(text: widget.user.umur);
-    agamaController = TextEditingController(text: widget.user.agama);
-    jenisKelaminController =
-        TextEditingController(text: widget.user.jenisKelamin);
-    pendidikanController = TextEditingController(text: widget.user.pendidikan);
+    agama = widget.user.agama;
+    jenisKelamin = widget.user.jenisKelamin;
+    pendidikan = widget.user.pendidikan;
     alamatController = TextEditingController(text: widget.user.alamat);
   }
 
@@ -164,35 +163,241 @@ class _EditUserDialogState extends State<EditUserDialog> {
             const SizedBox(height: 10.0),
             TextField(
               controller: userNameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: InputDecoration(
+                labelText: 'Username',
+                border: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                enabledBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                focusedBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.black),
+                ),
+                errorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.red),
+                ),
+                focusedErrorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 2, color: Colors.red),
+                ),
+              ),
             ),
+            const SizedBox(height: 10.0),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                labelText: 'Password',
+                border: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                enabledBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                focusedBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.black),
+                ),
+                errorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.red),
+                ),
+                focusedErrorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 2, color: Colors.red),
+                ),
+              ),
             ),
+            const SizedBox(height: 10.0),
             TextField(
               controller: namaUserController,
-              decoration: InputDecoration(labelText: 'Nama User'),
+              decoration: InputDecoration(
+                labelText: 'Nama User',
+                border: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                enabledBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                focusedBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.black),
+                ),
+                errorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.red),
+                ),
+                focusedErrorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 2, color: Colors.red),
+                ),
+              ),
             ),
+            const SizedBox(height: 10.0),
             TextField(
               controller: umurController,
-              decoration: InputDecoration(labelText: 'Umur'),
+              decoration: InputDecoration(
+                labelText: 'Umur',
+                border: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                enabledBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                focusedBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.black),
+                ),
+                errorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.red),
+                ),
+                focusedErrorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 2, color: Colors.red),
+                ),
+              ),
             ),
-            TextField(
-              controller: agamaController,
-              decoration: InputDecoration(labelText: 'Agama'),
+            SizedBox(
+              width: 120,
+              height: 50,
+              child: DropdownButton<String>(
+                value: agama,
+                icon: const Icon(Icons.arrow_downward),
+                hint: const Text('Pilih Agama'),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.red,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    agama = newValue!;
+                  });
+                },
+                items: <String>[
+                  'Islam',
+                  'Katolik',
+                  'Protestan',
+                  'Konguchu',
+                  'Budha',
+                  'Hindu'
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
             ),
-            TextField(
-              controller: jenisKelaminController,
-              decoration: InputDecoration(labelText: 'Jenis Kelamin'),
+            const SizedBox(height: 10.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Jenis Kelamin'),
+                Row(
+                  children: [
+                    Radio<String>(
+                      value: 'Pria',
+                      groupValue: jenisKelamin,
+                      activeColor: Colors.red,
+                      onChanged: (value) {
+                        setState(() {
+                          jenisKelamin = value!;
+                        });
+                      },
+                    ),
+                    const Text('Pria'),
+                    Radio<String>(
+                      value: 'Wanita',
+                      groupValue: jenisKelamin,
+                      activeColor: Colors.red,
+                      onChanged: (value) {
+                        setState(() {
+                          jenisKelamin = value!;
+                        });
+                      },
+                    ),
+                    const Text('Wanita'),
+                  ],
+                ),
+              ],
             ),
-            TextField(
-              controller: pendidikanController,
-              decoration: InputDecoration(labelText: 'Pendidikan'),
+            SizedBox(
+              width: 200,
+              height: 50,
+              child: DropdownButton<String>(
+                value: pendidikan,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                hint: const Text('Pilih Pendidikan Terakhir'),
+                elevation: 16,
+                style: const TextStyle(color: Colors.black),
+                underline: Container(
+                  height: 2,
+                  color: Colors.red,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    pendidikan = newValue!;
+                  });
+                },
+                items: <String>[
+                  'SD',
+                  'SMP',
+                  'SMA / SLTA SEDERAJAT',
+                  'STRATA 1',
+                  'MAGISTER',
+                  'PROFESSOR'
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(
+                      value,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
+            const SizedBox(height: 10.0),
             TextField(
               controller: alamatController,
-              decoration: InputDecoration(labelText: 'Alamat'),
+              decoration: InputDecoration(
+                labelText: 'Alamat',
+                border: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                enabledBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.grey),
+                ),
+                focusedBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.black),
+                ),
+                errorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 1, color: Colors.red),
+                ),
+                focusedErrorBorder: const OutlineInputBorder().copyWith(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(width: 2, color: Colors.red),
+                ),
+              ),
             ),
           ],
         ),
@@ -221,9 +426,9 @@ class _EditUserDialogState extends State<EditUserDialog> {
               password: passwordController.text,
               namaUser: namaUserController.text,
               umur: umurController.text,
-              agama: agamaController.text,
-              jenisKelamin: jenisKelaminController.text,
-              pendidikan: pendidikanController.text,
+              agama: agama,
+              jenisKelamin: jenisKelamin,
+              pendidikan: pendidikan,
               alamat: alamatController.text,
             );
             widget.controller.saveData(updatedUser);
