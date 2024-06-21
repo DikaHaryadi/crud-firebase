@@ -10,7 +10,7 @@ class DataUserModel {
   String jenisKelamin;
   String pendidikan;
   String alamat;
-  final DocumentSnapshot? documentSnapshot;
+  // final DocumentSnapshot? documentSnapshot;
 
   DataUserModel({
     required this.photoUser,
@@ -22,20 +22,21 @@ class DataUserModel {
     required this.jenisKelamin,
     required this.pendidikan,
     required this.alamat,
-    this.documentSnapshot,
+    // this.documentSnapshot,
   });
 
   static DataUserModel empty() => DataUserModel(
-      photoUser: '',
-      userName: '',
-      password: '',
-      namaUser: '',
-      userId: '',
-      agama: '',
-      jenisKelamin: '',
-      pendidikan: '',
-      alamat: '',
-      documentSnapshot: null);
+        photoUser: '',
+        userName: '',
+        password: '',
+        namaUser: '',
+        userId: '',
+        agama: '',
+        jenisKelamin: '',
+        pendidikan: '',
+        alamat: '',
+        // documentSnapshot: null
+      );
 
   Map<String, dynamic> toJson() {
     return {
@@ -63,7 +64,23 @@ class DataUserModel {
       jenisKelamin: data['jenisKelamin'] ?? '',
       pendidikan: data['pendidikan'] ?? '',
       alamat: data['alamat'] ?? '',
-      documentSnapshot: document,
+      // documentSnapshot: document,
     );
+  }
+
+  // Method to convert DataUserModel to a Map
+  Map<String, dynamic> toMap() {
+    return {
+      'userId': userId,
+      'userName': userName,
+      'password': password,
+      'namaUser': namaUser,
+      'agama': agama,
+      'jenisKelamin': jenisKelamin,
+      'pendidikan': pendidikan,
+      'alamat': alamat,
+      'photoUser': photoUser,
+      // Add other fields as necessary
+    };
   }
 }

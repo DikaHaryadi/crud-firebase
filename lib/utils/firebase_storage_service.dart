@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -10,6 +11,7 @@ class FirebaseStorageService extends GetxController {
 
   // final _firebaseStorage = FirebaseStorage.instance;
   Rx<File?> image = Rx<File?>(null);
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   Future<XFile?> pickImage() async {
     try {
@@ -40,72 +42,17 @@ class FirebaseStorageService extends GetxController {
     return null;
   }
 
-  // Future<String?> getImage(String path, String? imgName) async {
-  //   if (imgName == null) {
-  //     return null;
-  //   }
-  //   try {
-  //     var urlRef = FirebaseStorage.instance
-  //         .ref()
-  //         .child(path)
-  //         .child(imgName.toLowerCase());
-  //     var imgUrl = await urlRef.getDownloadURL();
-  //     return imgUrl;
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
-
-  // Upload local assets
-  // Future<Uint8List> getImageDataFromAssets(String path) async {
-  //   try {
-  //     final byteData = await rootBundle.load(path);
-  //     final imageData = byteData.buffer
-  //         .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
-  //     return imageData;
-  //   } catch (e) {
-  //     throw 'Error loading image data: $e';
-  //   }
-  // }
-
-  // // Upload image using ImageData on cloud firebase storage
-  // Future<String> uploadImageData(
-  //     String path, Uint8List image, String name) async {
-  //   try {
-  //     final ref = _firebaseStorage.ref(path).child(name);
-  //     await ref.putData(image);
-  //     final url = await ref.getDownloadURL();
-  //     return url;
-  //   } catch (e) {
-  //     if (e is FirebaseException) {
-  //       throw 'Firebase Exception: ${e.message}';
-  //     } else if (e is SocketException) {
-  //       throw 'Network Error: ${e.message}';
-  //     } else if (e is PlatformException) {
-  //       throw 'Platform Exception: ${e.message}';
-  //     } else {
-  //       throw 'Something Went Wrong! Please try again.';
-  //     }
-  //   }
-  // }
-
-  // Upload image on cloud firebase storage
-  // Future<String> uploadImageFile(String path, XFile image) async {
-  //   try {
-  //     final ref = _firebaseStorage.ref(path).child(image.name);
-  //     await ref.putFile(File(image.path));
-  //     final url = await ref.getDownloadURL();
-  //     return url;
-  //   } catch (e) {
-  //     if (e is FirebaseException) {
-  //       throw 'Firebase Exception: ${e.message}';
-  //     } else if (e is SocketException) {
-  //       throw 'Network Error: ${e.message}';
-  //     } else if (e is PlatformException) {
-  //       throw 'Platform Exception: ${e.message}';
-  //     } else {
-  //       throw 'Something Went Wrong! Please try again.';
-  //     }
-  //   }
-  // }
+  Future<String> uploadImage(File file) async {
+    try {
+      // Nama file unik menggunakan timestamp
+      final fileName =
+          'user_photos/${DateTime.now().millisecondsSinceEpoch}.png';
+      final ref = _firebaseStorage.ref().child(fileName);
+      final uploadTask = await ref.putFile(file);
+      final downloadUrl = await uploadTask.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
+    }
+  }
 }

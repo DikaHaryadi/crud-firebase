@@ -7,22 +7,18 @@ import 'package:pranamas/models/data_user_model.dart';
 class GetDataUserRepository extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<DataUserModel>> fetchDataUser(
-      {DocumentSnapshot? lastDocument, int limit = 10}) async {
+  Future<List<DataUserModel>> fetchDataUser() async {
     try {
-      Query query = _db.collection('dataUserModel').limit(limit);
-      if (lastDocument != null) {
-        query = query.startAfterDocument(lastDocument);
-      }
-      final documentSnapshot = await query.get();
+      final documentSnapshot = await _db.collection('dataUserModel').get();
       if (documentSnapshot.docs.isNotEmpty) {
         return documentSnapshot.docs
-            .map((doc) => DataUserModel.fromSnapshot(doc))
+            .map((e) => DataUserModel.fromSnapshot(e))
             .toList();
       } else {
         return [];
       }
     } catch (e) {
+      print('ada yag salah di fetchDataUser pada repository nya : $e');
       throw Get.snackbar(
         'Oh Snap!',
         e.toString(),

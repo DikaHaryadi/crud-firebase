@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pranamas/models/data_user_model.dart';
+import 'package:pranamas/screens/edt_data_user.dart';
 import '../controllers/get_data_user_controller.dart';
 
 class DataUserDataSource extends DataTableSource {
+  final BuildContext context;
   final List<DataUserModel> data;
   final GetDataUserController controller;
 
-  DataUserDataSource(this.data, this.controller);
+  DataUserDataSource(this.data, this.controller, this.context);
 
   @override
   DataRow? getRow(int index) {
@@ -25,15 +26,25 @@ class DataUserDataSource extends DataTableSource {
         DataCell(Text(user.jenisKelamin)),
         DataCell(Text(user.pendidikan)),
         DataCell(Text(user.alamat)),
-        DataCell(
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              // Delete user
-              controller.deleteDataUser(user);
-            },
-          ),
-        ),
+        DataCell(Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                // Delete user
+                // controller.editDataUser(user);
+                showEditDialog(context, controller, user);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                // Delete user
+                controller.deleteDataUser(user);
+              },
+            ),
+          ],
+        )),
       ],
     );
   }
