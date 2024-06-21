@@ -23,14 +23,35 @@ class GetDataUserController extends GetxController {
     } catch (e) {
       dataUserModel.assignAll([]);
       print('Error pada fetchDataUser di get_data_user_controller: $e');
+    } finally {
+      isLoadingDataUser.value = false;
+    }
+  }
+
+  Future<void> addDataUser(DataUserModel newUser) async {
+    try {
+      await dataUserRepo.addDataUser(newUser);
+      dataUserModel.add(newUser);
+    } catch (e) {
+      print('Failed to add user: $e');
     }
   }
 
   Future<void> deleteDataUser(DataUserModel user) async {
     try {
-      await dataUserRepo.deleteDataUser(user.userId);
-      dataUserModel.remove(user);
-      print('ini yang dihapus : ${user.userId}');
+      // Cari document ID yang sesuai
+      QuerySnapshot querySnapshot = await _db
+          .collection('dataUserModel')
+          .where('userId', isEqualTo: user.userId)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        await dataUserRepo.deleteDataUser(querySnapshot.docs.first.id);
+        dataUserModel.remove(user);
+        print('ini yang dihapus : ${user.userId}');
+      } else {
+        throw Exception('No user found with userId: ${user.userId}');
+      }
     } catch (e) {
       print('Failed to delete user: $e');
       // Handle error as needed
@@ -46,6 +67,10 @@ class GetDataUserController extends GetxController {
 
       if (querySnapshot.docs.isNotEmpty) {
         await querySnapshot.docs.first.reference.update(user.toMap());
+        int index = dataUserModel.indexWhere((u) => u.userId == user.userId);
+        if (index != -1) {
+          dataUserModel[index] = user;
+        }
       } else {
         throw Exception('No user found with userId: ${user.userId}');
       }

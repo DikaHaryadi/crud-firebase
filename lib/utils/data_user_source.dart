@@ -31,15 +31,12 @@ class DataUserDataSource extends DataTableSource {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-                // Delete user
-                // controller.editDataUser(user);
                 showEditDialog(context, controller, user);
               },
             ),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                // Delete user
                 controller.deleteDataUser(user);
               },
             ),

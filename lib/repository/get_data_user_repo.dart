@@ -18,7 +18,7 @@ class GetDataUserRepository extends GetxController {
         return [];
       }
     } catch (e) {
-      print('ada yag salah di fetchDataUser pada repository nya : $e');
+      print('ada yang salah di fetchDataUser pada repository nya : $e');
       throw Get.snackbar(
         'Oh Snap!',
         e.toString(),
@@ -37,9 +37,17 @@ class GetDataUserRepository extends GetxController {
     }
   }
 
-  Future<void> deleteDataUser(String userId) async {
+  Future<void> addDataUser(DataUserModel newUser) async {
     try {
-      await _db.collection('dataUserModel').doc(userId).delete();
+      await _db.collection('dataUserModel').add(newUser.toJson());
+    } catch (e) {
+      throw Exception('Failed to add user: $e');
+    }
+  }
+
+  Future<void> deleteDataUser(String docId) async {
+    try {
+      await _db.collection('dataUserModel').doc(docId).delete();
     } catch (e) {
       throw Exception('Failed to delete user: $e');
     }

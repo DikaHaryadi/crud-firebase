@@ -19,7 +19,7 @@ class CreateDataUser extends StatelessWidget {
           onPressed: () => Get.back(),
           icon: const Icon(Icons.arrow_back_ios),
         ),
-        title: Text('Tambah User'),
+        title: const Text('Tambah User'),
       ),
       body: Form(
           key: controller.dataUserFormKey,
@@ -154,7 +154,7 @@ class CreateDataUser extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12.0),
-              Text('Agama'),
+              const Text('Agama'),
               Padding(
                 padding: const EdgeInsets.only(right: 12.0),
                 child: Row(
@@ -167,7 +167,7 @@ class CreateDataUser extends StatelessWidget {
                         onChanged: (value) => controller.agama.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Islam',
                     ),
                     Expanded(child: Container()),
@@ -179,7 +179,7 @@ class CreateDataUser extends StatelessWidget {
                         onChanged: (value) => controller.agama.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Katolik',
                     ),
                     Expanded(child: Container()),
@@ -191,7 +191,7 @@ class CreateDataUser extends StatelessWidget {
                         onChanged: (value) => controller.agama.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Protestan',
                     ),
                   ],
@@ -210,7 +210,7 @@ class CreateDataUser extends StatelessWidget {
                         onChanged: (value) => controller.agama.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Konguchu',
                     ),
                     Expanded(child: Container()),
@@ -222,7 +222,7 @@ class CreateDataUser extends StatelessWidget {
                         onChanged: (value) => controller.agama.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Budha',
                     ),
                     Expanded(child: Container()),
@@ -234,14 +234,14 @@ class CreateDataUser extends StatelessWidget {
                         onChanged: (value) => controller.agama.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Hindu',
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 8.0),
-              Text('Jenis Kelamin'),
+              const Text('Jenis Kelamin'),
               Padding(
                 padding: const EdgeInsets.only(right: 12.0),
                 child: Row(
@@ -255,7 +255,7 @@ class CreateDataUser extends StatelessWidget {
                             controller.jenisKelamin.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Pria',
                     ),
                     Expanded(child: Container()),
@@ -268,7 +268,7 @@ class CreateDataUser extends StatelessWidget {
                             controller.jenisKelamin.value = value!,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Wanita',
                     ),
                   ],
