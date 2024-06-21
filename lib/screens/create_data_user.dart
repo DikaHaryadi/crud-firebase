@@ -434,7 +434,19 @@ class CreateDataUser extends StatelessWidget {
               ),
               const SizedBox(height: 15.0),
               ElevatedButton(
-                  onPressed: controller.sendDataUserContent,
+                  onPressed: () {
+                    if (storage.image.value == null) {
+                      Get.snackbar(
+                        'Perhatian',
+                        'Harap menginput foto',
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                        icon: const Icon(Icons.warning, color: Colors.white),
+                      );
+                    } else {
+                      controller.sendDataUserContent();
+                    }
+                  },
                   child: const Text('Buat User'))
             ],
           )),
